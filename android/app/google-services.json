@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1020607361159",
+    "firebase_url": "https://myapp-174615.firebaseio.com",
+    "project_id": "myapp-174615",
+    "storage_bucket": "myapp-174615.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020607361159:android:47d5f84636ab8b606b4822",
+        "android_client_info": {
+          "package_name": "com.devk.countingdaysloveyou"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020607361159-spp7uopjlfgrcub462kkst2abtsk80p3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxgr9Az5cIetPqlzvysDSLinhKlq-XGZk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020607361159-spp7uopjlfgrcub462kkst2abtsk80p3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1020607361159-pffi96pmdknf8a0vo9cp3phpf0k5icvq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.devk.countingdaysloveyou"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

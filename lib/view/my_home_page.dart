@@ -1,10 +1,12 @@
 import 'package:countingdaysloveyou/global.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 import 'dart:io';
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
@@ -15,19 +17,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String urlImages = "";
   Firestore firestore;
-  CollectionReference get messages => firestore.collection('messages');
   File sampleImage;
-
-  Function(DocumentSnapshot e) get i => null;
-  @override
-  void initState() {
-    super.initState();
-    final birthday = DateTime(2019, 07, 15);
-    final date2 = DateTime.now();
-    print("DEVK data: "+ date2.toString());
-    final difference = date2.difference(birthday).inDays;
-    print("DEVK time: "+ difference.toString());
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,15 +33,50 @@ class _MyHomePageState extends State<MyHomePage> {
               return new Text('Loading...');
             default:
               return new ListView.builder(
+                padding: const EdgeInsets.all(16),
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) {
                   DocumentSnapshot document = snapshot.data.documents[index];
                   return GestureDetector(
-                    onTap: () =>
-                        _setOnClickListViewItem(context ,index, document.documentID, document[urlchild]),
-                    child: ListTile(
-                      title: new Text(document[namechild]),
-                      subtitle: new Text(document[urlchild].toString()),
+                    onTap: () => _setOnClickListViewItem(context, index, document.documentID, document),
+                    child: Card(
+                      elevation: 10,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Container(
+                              width: 100.0,
+                              height: 100.0,
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                image: DecorationImage(
+                                  image: NetworkImage(document[urlchild].toString()),
+                                  fit: BoxFit.fill,
+                                ),
+                                borderRadius: BorderRadius.all(Radius.circular(75.0)),
+                                boxShadow: [
+                                  BoxShadow(blurRadius: 7.0, color: Colors.black)
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(30.0),
+                            child: Chip(
+                              label: Text(
+                                document[namechild],
+                                style: TextStyle(fontSize: 22),
+                              ),
+                              shadowColor: Colors.blue,
+                              backgroundColor: Colors.green,
+                              elevation: 10,
+                              autofocus: true,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -67,13 +92,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  _setOnClickListViewItem(BuildContext context, int index, String id, String url) {
-    print("DEVK index: " + index.toString() + "    -    " + id);
-    Navigator.pushNamed(context, '/home', arguments: url);
+  _setOnClickListViewItem(BuildContext context, int index, String id, DocumentSnapshot document) {
+    Navigator.pushNamed(context, '/optionDetail', arguments: document);
   }
+
   _setOnclickAddData() async {
     upLoadImages();
   }
+
   Future<void> deleteImage(String imageUrl, String token) async {
     String filePath = '${pathUrlImages}${imageUrl}?alt=media&token=${token}'
         .replaceAll(new RegExp(pathUrlImages), '')
@@ -93,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var strone = sampleImage.toString().substring(47);
     var mtext = strone.substring(0, strone.length - 5); //
     StorageReference storageReference =
-    FirebaseStorage.instance.ref().child(mtext);
+        FirebaseStorage.instance.ref().child(mtext);
     StorageUploadTask uploadTask = storageReference.putFile(sampleImage);
     uploadTask.onComplete.then((s) async {
       String url = (await s.ref.getDownloadURL()).toString();
@@ -103,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> showImages(String images) async {
     final StorageReference firebaseStorageRef =
-    FirebaseStorage.instance.ref().child(images);
+        FirebaseStorage.instance.ref().child(images);
     String url = (await firebaseStorageRef.getDownloadURL()).toString();
     print("DEVK URL: " + url);
   }

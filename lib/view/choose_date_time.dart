@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:countingdaysloveyou/view/animation/rainbow_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -131,44 +132,49 @@ class StateDateTime extends State<ChooseDateTime>
               children: <Widget>[
                 Container(
                   decoration: BoxDecoration(
-                      image: const DecorationImage(
-                          image: AssetImage("assets/images/unnamed.jpg"),
-                          fit: BoxFit.fill)),
+                    image: const DecorationImage(
+                      image: AssetImage("assets/images/unnamed.jpg"),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                   child: Center(
                     child: Text(
                       _day == null ? "Chon ngay" : _day.toString(),
                       style: TextStyle(
-                          shadows: [
-                            Shadow(
-                              color: Colors.green,
-                              blurRadius: 10.0,
-                              offset: Offset(5.0, 5.0),
-                            ),
-                            Shadow(
-                              color: Colors.red,
-                              blurRadius: 10.0,
-                              offset: Offset(-5.0, 5.0),
-                            ),
-                          ],
-                          fontSize: 40.0,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Codystar',
-                          color: Colors.yellow),
+                        fontSize: 40,
+                        fontFamily: 'Codystar',
+                        shadows: [
+                          Shadow(
+                            color: Colors.green,
+                            blurRadius: 10.0,
+                            offset: Offset(5.0, 5.0),
+                          ),
+                          Shadow(
+                            color: Colors.red,
+                            blurRadius: 10.0,
+                            offset: Offset(-5.0, 5.0),
+                          ),
+                        ],
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 6
+                          ..color = Colors.red[700],
+
+                      ),
                     ),
                   ),
                 ),
                 Positioned(
-                    child: Text(
-                      'Greetings, planet!',
-                      style: TextStyle(
-                        fontSize: 40,
-                        foreground: Paint()
-                          ..style = PaintingStyle.stroke
-                          ..strokeWidth = 6
-                          ..color = Colors.blue[700],
-                      ),
-                    ),
-                    left: mIscheck ? animation.value : -350)
+                  child: RainbowText(colors: [
+                    Color(0xFFFF2B22),
+                    Color(0xFFFF7F22),
+                    Color(0xFFEDFF22),
+                    Color(0xFF22FF22),
+                    Color(0xFF22F4FF),
+                    Color(0xFF5400F7),
+                  ], text: "Welcome to BBT", loop: true,),
+                  left: mIscheck ? animation.value : -350,
+                )
               ],
             ),
             flex: 9,
@@ -177,9 +183,11 @@ class StateDateTime extends State<ChooseDateTime>
       ),
     );
   }
-  _setOnClickNextScreen(BuildContext context){
+
+  _setOnClickNextScreen(BuildContext context) {
     Navigator.pushNamed(context, '/myHome');
   }
+
   _setOnClickShowDateTime() async {
     DatePicker.showDatePicker(
       context,

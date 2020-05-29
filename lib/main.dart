@@ -1,6 +1,7 @@
 //import 'package:countingdaysloveyou/API_CARD/Screen/api_card.dart';
 //import 'package:countingdaysloveyou/API_CARD/demo_listview.dart';
 import 'package:countingdaysloveyou/app_state.dart';
+import 'package:countingdaysloveyou/demo_example.dart';
 import 'package:countingdaysloveyou/model/demo_data.dart';
 import 'package:countingdaysloveyou/view/choose_date_time.dart';
 import 'package:countingdaysloveyou/view/my_home_page.dart';
@@ -38,11 +39,12 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        initialRoute: '/',
+        initialRoute: '/demoExample',
         routes: {
           '/': (context) => ChooseDateTime(title: 'Date Time'),
           '/myHome': (context) => MyHomePage(title: 'DEVK',),
           '/optionDetail': (context) => OptionDetail(title: 'InFor',),
+          '/demoExample': (context) => DemoExample(),
         },
       ),
     );
